@@ -1,0 +1,10 @@
+# These are separate as the webserver isn't a crucial part of the system
+bottle==0.12.10
+
+# Currently these are optional as the planned dictionary feature
+# of the www is under discussion (with myself)
+# translate ANSI colours of trans output to html
+# ansi2html==1.1.1
+# on-disk caching
+# joblib==0.10.3
+

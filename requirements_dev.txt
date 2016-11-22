@@ -1,0 +1,3 @@
+# debug and interactive libraries
+ipdb
+ipython

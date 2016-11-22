@@ -1,0 +1,516 @@
+<html>
+<head>
+<meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script   src="https://code.jquery.com/jquery-3.1.1.js"
+              integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="
+              crossorigin="anonymous"
+    ></script>
+    <!--https://github.com/walmik/timer.jquery-->
+    <script>/*! timer.jquery 0.6.3 2016-08-09*/!function(a){function b(d){if(c[d])return c[d].exports;var e=c[d]={exports:{},id:d,loaded:!1};return a[d].call(e.exports,e,e.exports,b),e.loaded=!0,e.exports}var c={};return b.m=a,b.c=c,b.p="",b(0)}([function(a,b,c){"use strict";function d(a){return a&&a.__esModule?a:{"default":a}}var e=c(1),f=d(e),g=c(2),h=d(g);!function(){$.fn.timer=function(a){return a=a||"start",this.each(function(){$.data(this,h["default"].PLUGIN_NAME)instanceof f["default"]||$.data(this,h["default"].PLUGIN_NAME,new f["default"](this,a));var b=$.data(this,h["default"].PLUGIN_NAME);"string"==typeof a?"function"==typeof b[a]&&b[a]():b.start()})}}()},function(a,b,c){"use strict";function d(a){return a&&a.__esModule?a:{"default":a}}function e(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}Object.defineProperty(b,"__esModule",{value:!0});var f=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),g=c(2),h=d(g),i=c(3),j=d(i),k=function(){function a(b,c){if(e(this,a),this.element=b,this.originalConfig=$.extend({},c),this.totalSeconds=0,this.intervalId=null,this.html="html","INPUT"!==b.tagName&&"TEXTAREA"!==b.tagName||(this.html="val"),this.config=j["default"].getDefaultConfig(),c.duration&&(c.duration=j["default"].durationTimeToSeconds(c.duration)),"string"!=typeof c&&(this.config=$.extend(this.config,c)),this.config.seconds&&(this.totalSeconds=this.config.seconds),this.config.editable&&j["default"].makeEditable(this),this.startTime=j["default"].unixSeconds()-this.totalSeconds,this.config.duration&&this.config.repeat&&this.config.updateFrequency<1e3&&(this.config.updateFrequency=1e3),this.config.countdown){if(!this.config.duration)throw new Error("Countdown option set without duration!");if(this.config.editable)throw new Error("Cannot set editable on a countdown timer!");this.config.startTime=j["default"].unixSeconds()-this.config.duration,this.totalSeconds=this.config.duration}}return f(a,[{key:"start",value:function(){this.state!==h["default"].TIMER_RUNNING&&(j["default"].setState(this,h["default"].TIMER_RUNNING),this.render(),this.intervalId=setInterval(j["default"].intervalHandler.bind(null,this),this.config.updateFrequency))}},{key:"pause",value:function(){this.state===h["default"].TIMER_RUNNING&&(j["default"].setState(this,h["default"].TIMER_PAUSED),clearInterval(this.intervalId))}},{key:"resume",value:function(){this.state===h["default"].TIMER_PAUSED&&(j["default"].setState(this,h["default"].TIMER_RUNNING),this.config.countdown?this.startTime=j["default"].unixSeconds()-this.config.duration+this.totalSeconds:this.startTime=j["default"].unixSeconds()-this.totalSeconds,this.intervalId=setInterval(j["default"].intervalHandler.bind(null,this),this.config.updateFrequency))}},{key:"remove",value:function(){clearInterval(this.intervalId),$(this.element).data(h["default"].PLUGIN_NAME,null)}},{key:"reset",value:function(){var a=this.element,b=this.originalConfig;this.remove(),$(a).timer(b)}},{key:"render",value:function(){this.config.format?$(this.element)[this.html](j["default"].secondsToFormattedTime(this.totalSeconds,this.config.format)):$(this.element)[this.html](j["default"].secondsToPrettyTime(this.totalSeconds)),$(this.element).data("seconds",this.totalSeconds)}}]),a}();b["default"]=k},function(a,b){"use strict";Object.defineProperty(b,"__esModule",{value:!0});var c={PLUGIN_NAME:"timer",TIMER_RUNNING:"running",TIMER_PAUSED:"paused",DAYINSECONDS:86400,THIRTYSIXHUNDRED:3600,SIXTY:60,TEN:10};b["default"]=c},function(a,b,c){"use strict";function d(a){return a&&a.__esModule?a:{"default":a}}Object.defineProperty(b,"__esModule",{value:!0});var e=c(2),f=d(e),g=function(){var a=arguments.length<=0||void 0===arguments[0]?0:arguments[0],b=0,c=0,d=Math.floor(a/f["default"].SIXTY),e=d,g=void 0;return a>=f["default"].DAYINSECONDS&&(b=Math.floor(a/f["default"].DAYINSECONDS)),a>=f["default"].THIRTYSIXHUNDRED&&(c=Math.floor(a%f["default"].DAYINSECONDS/f["default"].THIRTYSIXHUNDRED)),a>=f["default"].SIXTY&&(e=Math.floor(a%f["default"].THIRTYSIXHUNDRED/f["default"].SIXTY)),g=a%f["default"].SIXTY,{days:b,hours:c,minutes:e,totalMinutes:d,seconds:g,totalSeconds:a}},h=function(a){return a=parseInt(a,10),a<10?"0"+a:a},i=function(){return{seconds:0,editable:!1,duration:null,callback:function(){console.log("Time up!")},repeat:!1,countdown:!1,format:null,updateFrequency:500}},j=function(){return Math.round(Date.now()/1e3)},k=function(a){var b=g(a);if(b.days)return b.days+":"+h(b.hours)+":"+h(b.minutes)+":"+h(b.seconds);if(b.hours)return b.hours+":"+h(b.minutes)+":"+h(b.seconds);var c="";return c=b.minutes?b.minutes+":"+h(b.seconds)+" min":b.seconds+" sec"},l=function(a,b){var c=g(a),d=[{identifier:"%d",value:c.days},{identifier:"%h",value:c.hours},{identifier:"%m",value:c.minutes},{identifier:"%s",value:c.seconds},{identifier:"%g",value:c.totalMinutes},{identifier:"%t",value:c.totalSeconds},{identifier:"%D",value:h(c.days)},{identifier:"%H",value:h(c.hours)},{identifier:"%M",value:h(c.minutes)},{identifier:"%S",value:h(c.seconds)},{identifier:"%G",value:h(c.totalMinutes)},{identifier:"%T",value:h(c.totalSeconds)}];return d.forEach(function(a){b=b.replace(a.identifier,a.value)}),b},m=function(a){if(!a)throw new Error("durationTimeToSeconds expects a string argument!");if(!isNaN(Number(a)))return a;a=a.toLowerCase();var b=a.match(/\d{1,2}d/),c=a.match(/\d{1,2}h/),d=a.match(/\d{1,2}m/),e=a.match(/\d{1,2}s/);if(!(b||c||d||e))throw new Error("Invalid string passed in durationTimeToSeconds!");var g=0;return b&&(g+=Number(b[0].replace("d","")*f["default"].DAYINSECONDS)),c&&(g+=Number(c[0].replace("h","")*f["default"].THIRTYSIXHUNDRED)),d&&(g+=Number(d[0].replace("m",""))*f["default"].SIXTY),e&&(g+=Number(e[0].replace("s",""))),g},n=function(a){var b=void 0,c=void 0;return a.indexOf("sec")>0?c=Number(a.replace(/\ssec/g,"")):a.indexOf("min")>0?(a=a.replace(/\smin/g,""),b=a.split(":"),c=Number(b[0]*f["default"].SIXTY)+Number(b[1])):a.match(/\d{1,2}:\d{2}:\d{2}:\d{2}/)?(b=a.split(":"),c=Number(b[0]*f["default"].DAYINSECONDS)+Number(b[1]*f["default"].THIRTYSIXHUNDRED)+Number(b[2]*f["default"].SIXTY)+Number(b[3])):a.match(/\d{1,2}:\d{2}:\d{2}/)&&(b=a.split(":"),c=Number(b[0]*f["default"].THIRTYSIXHUNDRED)+Number(b[1]*f["default"].SIXTY)+Number(b[2])),c},o=function(a,b){a.state=b,$(a.element).data("state",b)},p=function(a){$(a.element).on("focus",function(){a.pause()}),$(a.element).on("blur",function(){a.totalSeconds=n($(a.element)[a.html]()),a.resume()})},q=function(a){return a.totalSeconds=j()-a.startTime,a.config.countdown?(a.totalSeconds=a.config.duration-a.totalSeconds,0===a.totalSeconds&&(clearInterval(a.intervalId),o(a,f["default"].TIMER_STOPPED),a.config.callback(),$(a.element).data("seconds")),void a.render()):(a.render(),void(a.config.duration&&a.totalSeconds>0&&a.totalSeconds%a.config.duration===0&&(a.config.callback&&a.config.callback(),a.config.repeat||(clearInterval(a.intervalId),o(a,f["default"].TIMER_STOPPED),a.config.duration=null))))};b["default"]={getDefaultConfig:i,unixSeconds:j,secondsToPrettyTime:k,secondsToFormattedTime:l,durationTimeToSeconds:m,prettyTimeToSeconds:n,setState:o,makeEditable:p,intervalHandler:q}}]);</script>
+<style type="text/css">
+* {
+    font-family: 'Noto Sans', sans-serif;
+}
+#results_inner {
+    cursor: crosshair;
+}
+table#board_table {
+    width:98vh;
+    height:98vh;
+    z-index: 2;
+}
+#cloak {
+    width:98vh;
+    height:98vh;
+    z-index: 3;
+    font-size: 400px;
+}
+table#board_table td {
+    border-radius: 10px;
+    border:1px solid #333;
+    text-align: center;
+    font-size:80px;
+    width:19vh;
+    height:19vh;
+}
+table#board_table td {
+    background: rgba(203,226,216,1);
+    background: -moz-radial-gradient(center, ellipse cover, rgba(203,226,216,1) 0%, rgba(196,219,184,0) 100%);
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(203,226,216,1)), color-stop(100%, rgba(196,219,184,0)));
+    background: -webkit-radial-gradient(center, ellipse cover, rgba(203,226,216,1) 0%, rgba(196,219,184,0) 100%);
+    background: -o-radial-gradient(center, ellipse cover, rgba(203,226,216,1) 0%, rgba(196,219,184,0) 100%);
+    background: -ms-radial-gradient(center, ellipse cover, rgba(203,226,216,1) 0%, rgba(196,219,184,0) 100%);
+    background: radial-gradient(ellipse at center, rgba(203,226,216,1) 0%, rgba(196,219,184,0) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cbe2d8', endColorstr='#c4dbb8', GradientType=1 );
+}
+/* Make info icon link same size as the language name */
+#select_language_inner a {
+    line-height: 1em;
+}
+.pointer {
+    cursor: pointer;
+}
+button:focus {outline:0;}
+#game_description a {
+    color: rgba(100,100,100,0.7);
+}
+.hide {
+    display:none;
+}
+</style>
+
+<script type="text/javascript">
+function shuffle(array) {
+  var currentIndex = array.length
+    , temporaryValue
+    , randomIndex
+    ;
+
+  while (0 !== currentIndex) {
+
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+}
+
+var languages = {
+//    template: {
+//        dice: 'ODCNAAURSZSOKBZTAĘĘUZEYGOELSWCÓTZJTŚKAŁOZAENERIHALCŁMIMRDYŻZPTAĆĆOBIDINENPNISAINWŁUMYLAGKŁUŃBJDRIYĘZOJZINZYISNKEŻJPOOŚĄTEEMSWŹOWHAOEKWEGPFCCOEIAIĄERAI',
+//        iso_639_2: 'pl',
+//        name: 'Polski',
+//        name_en: 'Polish',
+//        dictionary_url: 'http://sjp.pl/${word}',
+//        info : `
+//            <table class="w3-table">
+//            <tr><td>Word list used</td><td><a href="http://sjp.pl/slownik/growy/" target="_blank">sjp.pl</a></td></tr>
+//            <tr><td>Status of the list:</td><td>wordgames community curated - best possible.</td></tr>
+//            <tr><td>License:</td><td>
+//                <a href="https://tldrlegal.com/license/gnu-general-public-license-v2" target="_blank">GPL</a>,
+//                <a href="https://tldrlegal.com/license/creative-commons-attribution-share-alike-(cc-sa)" target="_blank">CC-SA</a>
+//            </td></tr>
+//            </table>
+//        `
+//    },
+    spa: {
+        dice: 'MTGAOYURODÓCAECLTLROIEFCCNZNUEÉTSLDQEEAENAOJNDCEPEIYALVIEUDSTNASEMRARMOAIOLLTAPORASODEAOQOÚESANSTEAAREAINSNRMEAUODALEPÁCACNXSÍEBDKSTSSULSPEIIMEIÑNEEHI',
+        iso_639_2: 'es',
+        name: 'Español',
+        name_en: 'Spanish',
+    },
+    rus: {
+        dice: 'ЖАДАЧАОНБЬИГЫМЩПТЁАУАООИКЬЛВМЯПФИИПНЙЬЛОУКВЕГСРЕЛОЕГДЙЯАИИОЦТТСЛСООАЕЫЧЮИЗОЕЖЕТНЪАНЛОНСАВНСРРЛИЕБЭТШОВВРАЕАЕПМТОТОАСШБКОЕВНУРХРЛЯУРЗОКДСКРЕНХИЧНИОДЛМТ',
+        iso_639_2: 'ru',
+        name: 'Русский язык',
+        name_en: 'Russian',
+    },
+    pol: {
+        dice: 'ODCNAAURSZSOKBZTAĘĘUZEYGOELSWCÓTZJTŚKAŁOZAENERIHALCŁMIMRDYŻZPTAĆĆOBIDINENPNISAINWŁUMYLAGKŁUŃBJDRIYĘZOJZINZYISNKEŻJPOOŚĄTEEMSWŹOWHAOEKWEGPFCCOEIAIĄERAI',
+        iso_639_2: 'pl',
+        name: 'Polski',
+        name_en: 'Polish',
+        dictionary_url: 'http://sjp.pl/%',
+        info : `
+            <table class="w3-table">
+            <tr><td>Word list used</td><td><a href="http://sjp.pl/slownik/growy/" target="_blank">sjp.pl</a></td></tr>
+            <tr><td>Status of the list:</td><td>wordgames community curated - best possible.</td></tr>
+            <tr><td>License:</td><td>
+                <a href="https://tldrlegal.com/license/gnu-general-public-license-v2" target="_blank">GPL</a>,
+                <a href="https://tldrlegal.com/license/creative-commons-attribution-share-alike-(cc-sa)" target="_blank">CC-SA</a>
+                Licensing stated at <a href="http://sjp.pl/slownik/growy/" target="_blank">sjp.pl</a>.
+            </td></tr>
+            </table>
+        `
+    },
+    eng: {
+        dice: 'SOTHEEAAAMRHIEOSOJAGUSTFWEQHGAAOTITNIEYVDRIEDHASCINTDZRXTOECIEKNSOREIARIAEORENNAOWLOPKSPHNEESCPGSLVMTASLEDWRFTLOORFNMEFETTTYHTHGENUEECRELTBYAABBUDUMNH',
+        iso_639_2: 'en',
+        name: 'English',
+        name_en: 'English',
+        info: `
+            <table class="w3-table">
+            <tr><td>Word list used</td><td><a href="https://en.wikipedia.org/wiki/Collins_Scrabble_Words" target="_blank">SOWPODS</a></td></tr>
+            <tr><td>Status of the list:</td><td>scrabble community curated - best possible.</td></tr>
+            <tr><td>License:</td><td>
+                TBD
+            </td></tr>
+            </table>
+`
+    },
+    afr: {
+        // 60.96  193365
+        dice:'IHKHROIEIJEZSECNEAARGALIADFLWNWWYODLDKTNSLIKEGRREUREEEOSTRNVOLSSMGTEEEUEEATESEPLRDDRVNEPMMENTTNNEETNAEUIDEKOIOSUSOASVEAVYYDBPFIAGBGRTDAEAAWNONNIBIHOIM',
+        iso_639_2: 'af',
+        name: 'Afrikaans',
+        name_en: 'Afrikaans',
+    },
+    ara: {
+        // 50.44  366268
+        dice: 'هحىهعضقتبلئعحفدصمرارميوظلحصمعابذردبهلخوموركشؤاايلىلمتراغزالاهونثيااينرلمنكلعتايسوللطـالببخوأنوةنكمجماكةلطناتتيليفادمءفاتلاقنجاعالاأيليعشامةايسإنتآهةاو',
+        iso_639_2: 'ar',
+        'name': 'العَرَبِيَّة',
+        'name_en': 'Arabic',
+    },
+    ces: {
+        // 9.52 7.5K
+        dice: 'IRLGITÍVÍŽÍAPDMANŠDFEEČÉŽTNČHŘOŇENSBAVMVAOLÉAOTERHZEAOYĚSHAÝSPVMAEIJLPKVŠPLNODLRKTTSÚBDĚNŽJTOAOISKJVEOMEUAZHCAIJSEOTOEĎISNUONLELKLRBYNUCYŘUÝCŤIMEDNOKŮ',
+        iso_639_2: 'cs',
+        name: 'Čeština',
+        name_en: 'Czech'
+    },
+    por: {
+        // 38.5    458391
+        dice: 'DITEOOEAYONSETSUSVREÉLUNNLHÀÂMRSAFAÚETNOGEIPIRSSEEOPODMOAUÓEÇNMOAAAIEODSAISTSORRCRQREÊDTDRENADJLOMBTARÕCAAEAUNAAVRUAEOCECESÔAEICIAOXIÃSIAÁOPOOULDMMDÍZ',
+        iso_639_2: 'pt',
+        name: 'Portuguese',
+        name_en: 'Português',
+        info : `
+            <table class="w3-table">
+            <tr><td>Word list used</td><td><a href="http://www.linguateca.pt/acesso/info_freq_English.php" target="_blank">"All corpora from Portugal" of Linguateca Projeto AC/DC</a></td></tr>
+            <tr><td>Status of the list:</td><td>corpora derived - possibly complete but not cleaned nor curated - "we have not in any case attempted to remove foreign words from the lists".</td></tr>
+            <tr><td>License:</td><td>
+                Unknown, possibly none.
+            </td></tr>
+            </table>
+        `
+
+    }
+};
+
+
+// globals, please stop moaning about using globals... in a single file app
+var board_size = 5;
+var selected_language = '';
+var gridstring = '';
+var results_fetched = false;
+var solverAvailable = false;
+var everything_show_languages = true;
+
+function high(path) {
+    $('.board-die').removeClass('w3-orange w3-blue');
+    for (var index in path) {
+        [x, y] = path[index];
+        var color = index == 0 ? 'w3-blue' : 'w3-orange' ;
+        $(`#board-${x}-${y}`).addClass(color);
+    }
+}
+function get_score(original) {
+    // points according to https://en.wikipedia.org/wiki/Boggle#Rules
+    // 3,4 1
+    // 5   2
+    // 6   3
+    // 7   5
+    // 8+  11
+    if (original.length < 5) {
+        color = 'w3-lightgray';
+    }
+    else if (original.length == 5) {
+        color = 'w3-khaki';
+    }
+    else if (original.length == 6) {
+        color = 'w3-lime';
+    }
+    else if (original.length == 7) {
+        color = 'w3-yellow';
+    }
+    else if (original.length > 7) {
+        color = 'w3-orange';
+    }
+    return color;
+}
+function get_solutions_or_show() {
+    if (results_fetched) {
+        $('#results').show();
+    } else {
+        results_fetched = true;
+        get_solution()
+    }
+}
+function get_solution() {
+    console.log('get_solution, results_fetched: ', results_fetched);
+    var $resultsIcon = $('#results_icon');
+    $resultsIcon.addClass('w3-spin');
+    var xhr = new XMLHttpRequest();
+    if (languages[selected_language].hasOwnProperty('dictionary_url')) {
+        var url = languages[selected_language].dictionary_url
+    } else {
+        var url = 'https://translate.google.com/#auto/en/%'
+    }
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200 && solverAvailable) {
+            $resultsIcon.removeClass('w3-spin');
+            var words = JSON.parse(xhr.responseText);
+            console.log('backend responded', words);
+            var len = Object.keys(words.data).length;
+            $resultsIcon.html(` ${len}`);
+                for (index in words.data) {
+                var original = words.data[index][0];
+                var path = words.data[index][1];
+                var color = get_score(original, color);
+                var href = url.replace('%', original);
+                var template = `
+                    <a
+                        href="${href}"
+                        data-path="${JSON.stringify(path)}"
+                        class="show-high ${color}"
+                        target="_blank"
+                        >${original}</a>
+                `;
+
+                $('#results_inner').append(template);
+                $('#results').show();
+            }
+        } else if (xhr.readyState == XMLHttpRequest.DONE && xhr.status != 200) {
+            $resultsIcon.html(` error ${xhr.status}`);
+            $resultsIcon.removeClass('w3-spin');
+        }
+    };
+    xhr.open('GET', '/solver/' + selected_language + '/' + gridstring, true);
+    xhr.send(null);
+}
+
+$(document).on('mouseover', '.show-high', function () {
+    high($(this).data('path'));
+});
+
+var reset_results = function() {
+    $('#results').fadeOut();
+    $('#results_icon').html('');
+    $('#results_inner').html('');
+
+};
+
+var board = function() {
+    results_fetched = false;
+    reset_results();
+    gridstring = '';
+    var dice_string = languages[selected_language].dice;
+    var dice = dice_string.match(/.{1,6}/g);
+    shuffle(dice);
+    console.log('shuffled dice', dice);
+    var html = '<table id="board_table" style="display:none">';
+
+    for (var dice_no in dice) {
+        var row = Math.floor(dice_no / board_size);
+        var column = dice_no % board_size;
+        var first_in_a_row = dice_no % board_size == 0;
+        var last_in_a_row = dice_no % 5 == 4;
+
+        if (first_in_a_row) html += '<tr>';
+        html += `<td class="board-die" id="board-${column}-${row}">`;
+        var dice_side_no = Math.floor((Math.random()*6));
+        var visible_letter = dice[dice_no][dice_side_no];
+        html += visible_letter;
+        gridstring += visible_letter;
+        html += '</td>';
+        if (last_in_a_row) {
+            html += '</tr>';
+            gridstring += ' ';
+        }
+
+    }
+    html += '</table>';
+    $('#board').html(html);
+
+};
+function addOnLoadEvent(func) {
+    if (window.addEventListener) {window.addEventListener('load', func, false);}
+    else if (window.attachEvent) {window.attachEvent('onload', func);}
+}
+
+function UrlExists(url, callback)
+{
+    var http = new XMLHttpRequest();
+    http.open('HEAD', url);
+    http.onreadystatechange = function() {
+        if (this.readyState == this.DONE) {
+            solverAvailable = true;
+        }
+    };
+    http.send();
+}
+
+UrlExists('/solver', console.log);
+
+function make_select_language_buttons() {
+    var $select_language = $('#select_language_inner');
+    var $modals = $('#modals');
+    for (var key in languages) {
+        var info = '';
+        if (languages[key].hasOwnProperty('info')) {
+            var id = `language-info-${key}`;
+            info = `
+                <a href="#" onclick="$('#${id}').show()"><span class="fa fa-info"></span></a>
+            `;
+            $modals.append(`
+                <div id="${id}" class="w3-modal">
+                    <div class="w3-modal-content">
+                        <header class="w3-container w3-green">
+                            <h2>${languages[key].name} - Language information.</h2>
+                        </header>
+                        <div class="w3-container w3-orange">
+                            ${languages[key].info}
+                        </div>
+                  </div>
+                </div>
+
+            `
+            );
+        }
+        $select_language.append(`
+            <tr>
+                <td class=""><a href="#" data-lang="${key}" id="${key}" class="select_language">${languages[key].name}</a></td>
+                <td class="">${info}</td>
+            </tr>
+        `);
+
+
+    }
+}
+
+addOnLoadEvent(make_select_language_buttons);
+
+$(document).on('click', '.select_language', function() {
+    selected_language = $(this).data('lang');
+    $('#select_language_icon_text').html(languages[selected_language].name);
+    board();
+    $('#select_language').fadeOut();
+    $('#next_game_icon').fadeOut();
+    $('#results_icon').fadeOut();
+    $('#cloak').fadeIn();
+});
+// animate next_game_icon on hover
+$(document).on('mouseenter', '#next_game_icon', function () {
+    $(this).addClass('w3-spin');
+}).on('mouseleave', '#next_game_icon', function () {
+    $(this).removeClass('w3-spin');
+});
+
+$(document).on('click', 'body',  function () {
+    // At the beginning we want to show as little as possible and make any click show the languages, mini-walk-through
+    $('#select_language').fadeIn();
+    $(document).off('click', 'body');
+});
+$(document).on('click', '#cloak', function () {
+    $(this).fadeOut();
+    var $clock = $('#clock');
+    $clock.removeClass('w3-red');
+    $clock.timer('remove');
+    $clock.timer({
+        duration: '3min5s', // 5 extra seconds for people to grab pencils
+        countdown: true,
+        callback: function () {
+            $('#clock').addClass('w3-red')
+        }
+    });
+    $('#board_table').fadeIn();
+    // .css({display: 'inline-block'}) is required for spinning icons
+    $('#results_icon').fadeIn().css({display: 'inline-block'});
+    $('#next_game_icon').fadeIn().css({display: 'inline-block'});
+    $('#info_icon').fadeIn();
+});
+$(document).on('click', '#next_game_icon',  function () {
+    $('#clock').timer('remove');
+    $('#next_game_icon').fadeOut();
+    $('#results_icon').fadeOut();
+    $('#cloak').fadeIn();
+    board();
+});
+// close modal on click anywhere
+// FIXME: clicking links in modal will hide it too, bad
+$(document).on('click', '.w3-modal', function () {
+    $(this).fadeOut();
+});
+</script>
+
+</head>
+<body class="w3-display-container w3-green w3-row">
+    <nav id="select_language" class="w3-sidenav w3-dark-grey hide">
+        <a onclick="$('#select_language').fadeOut();" class="w3-closenav w3-large">Close &times;</a>
+        <table class="w3-table" id="select_language_inner"></table>
+    </nav>
+    <nav id="results" class="w3-sidenav w3-dark-grey hide" style="right:0">
+        <a onclick="$('#results').fadeOut();" class="w3-closenav w3-large">Close &times;</a>
+        <div class="w3-border" id="results_inner">
+        </div>
+    </nav>
+
+    <div class="w3-display-topleft">
+        <span id="select_language_icon" class="w3-opennav w3-xxlarge w3-padding fa fa-bars" onclick="$('#select_language').fadeIn()"></span>
+        <br>
+        <span id="next_game_icon" class="w3-xxlarge fa fa-refresh w3-padding hide"></span>
+    </div>
+    <div class="w3-display-bottomleft w3-padding">
+        <span id="info_icon" class="w3-xxlarge fa fa-info-circle hide pointer" onclick="$('#game_info_modal').fadeIn();"></span>
+        <br>
+        <span id="select_language_icon_text" class="w3-large"></span>
+    </div>
+    <div class="w3-display-topright w3-padding">
+        <span id="results_icon" class="w3-opennav w3-xxlarge fa fa-database hide" onclick="get_solutions_or_show();"></span>
+    </div>
+    <div class="w3-display-middle" id="board">
+        <div class="w3-xxlarge pointer">
+            <span class="fa fa-hand-o-left"></span> Choose language
+        </div>
+    </div>
+    <div class="w3-display-middle hide" id="cloak">
+        <span class="w3-display-middle fa fa-question-circle pointer">
+
+        </span>
+    </div>
+    <div id="clock" class="w3-display-bottomright w3-padding w3-xxlarge"></div>
+
+    <div id="modals">
+        <!--Modals are usually called from side navigation which imposes style changes irrelevant to modals.-->
+        <!--We need a place to store them where they would not be affected-->
+
+        <div id="game_info_modal" class="w3-modal">
+            <div class="w3-modal-content w3-card-8">
+                <header class="w3-container w3-green">
+                    <h2>Boggle Board</h2>
+                </header>
+                <div class="w3-container w3-orange">
+                    <p>This is not an online-game. You will still need friends and pencils to play it.</p>
+                    <p>The good part is that I can create better and larger boards than original boggle did and for new languages.</p>
+                    <p>I plan to put some more text here one day. Yeah, sure. </p>
+                    <p>The main source of wordlists is <a href="https://github.com/hermitdave/FrequencyWords/tree/master/content/2016">
+                        this excellet work by hermitdave</a>. Some languages use other, stated in language info pages.
+                    </a></p>
+                </div>
+                <footer class="w3-container w3-green w3-padding">
+                    Made by bartek brak, with peristence and patience.<br>
+                    <a href="http://bartekbrak.github.io/">http://bartekbrak.github.io/</a><br><br>
+                        <a href="https://github.com/bartekbrak" target="_blank"><i class="fa fa-2x fa-github-alt"></i></a>
+                        <a href="https://bitbucket.org/bartekz" target="_blank"><i class="fa fa-2x fa-bitbucket"></i></a>
+                        <a href="http://stackoverflow.com/users/1472229/user35186" target="_blank"><i class="fa fa-2x fa-stack-overflow"></i></a>
+                        <a href="http://www.codewars.com/users/bartekbrak" target="_blank"><i class="fa fa-2x fa-code"></i></a>
+                        <a href="https://twitter.com/bartekbrak" target="_blank"><i class="fa fa-2x fa-twitter"></i></a>
+                        <a href="https://www.youtube.com/user/faolchumor" target="_blank"><i class="fa fa-2x fa-youtube"></i></a>
+                        <a href="http://sunscrapers.com/" target="_blank"><i class="fa fa-2x fa-thumbs-o-up"></i></a>
+
+                </footer>
+            </div>
+        </div>
+    </div>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-87383314-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+</body>
+</html>
+
+

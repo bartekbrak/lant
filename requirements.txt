@@ -1,0 +1,8 @@
+# Print db columns in a sensible manner
+tabulate==0.7.5
+# Gutenberg is an API to download texts from project gutenberg,
+# it is not well maintained so I had to modify it to deal with utf-8 better
+# It is only needed for rarely used function so it is optional and will be in-line imported
+# also for Ubuntu: apt-get install libdb5.1-dev
+# Gutenberg==0.4.2
+
